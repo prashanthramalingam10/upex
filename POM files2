@@ -1,0 +1,12 @@
+package POMfiles;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class NDLD_POM {
+	
+	
+	@FindBy ( xpath = "//*[contains(text(),'License Management ')]") public static WebElement License_menu;
+	
+
+}

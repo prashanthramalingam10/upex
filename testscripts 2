@@ -1,0 +1,72 @@
+package testscripts;
+
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
+import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import Datadriven.data_driven;
+import POMfiles.login_page;
+import commonfiles.commons;
+
+public class Initial extends commons {
+	
+	
+	
+
+	@BeforeSuite
+	public void initialise() throws IOException {
+		
+		System.out.println("fffff");
+		launch();	
+	}
+	
+	@Test (dataProvider = "dp")
+	public void login(String username,String pass) {
+		
+		
+		PageFactory.initElements(driver,login_page.class);
+		
+		login_page.username.sendKeys(username);
+		login_page.password.sendKeys(pass);
+		
+		String captcha = JOptionPane.showInputDialog("Enter Captcha");
+		login_page.captchafield.sendKeys(captcha);
+		login_page.loginbutton.click();
+		
+	}
+	
+	
+	@DataProvider
+	public Object[][] dp() throws IOException {
+
+		data_driven dc = new data_driven("D:\\Auto\\data.xlsx");
+
+		int totalrow = dc.rowcount(0);
+		// int totalcol = dc.columncount(0);
+
+		Object[][] data = new Object[totalrow][2];
+
+		for (int i = 0; i < totalrow; i++) {
+			// for(int j=0;j<totalcol;j++){
+			data[i][0] = dc.getdata(0, i, 0);
+			data[i][1] = dc.getdata(0, i, 1);
+			
+		}
+		return data;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+}
